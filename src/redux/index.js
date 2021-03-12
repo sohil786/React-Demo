@@ -1,5 +1,6 @@
-import { createStore } from 'redux'
-import {  USER_DETAILS } from '../common';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { USER_DETAILS } from '../common';
 
 function userReducer(state = { value: 0 }, action) {
   console.log("action", action);
@@ -15,6 +16,19 @@ function userReducer(state = { value: 0 }, action) {
 
 // Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
-export let store = createStore(userReducer)
 
+export const store = createStore(
+  userReducer,
+  composeWithDevTools(
+    // applyMiddleware(...middleware)
+    // other store enhancers if any
+  )
+);
+
+// export let store = createStore(userReducer)
+
+// export const store = createStore(
+//   userReducer, reducer,/* preloadedState, */
+// +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+// );
 

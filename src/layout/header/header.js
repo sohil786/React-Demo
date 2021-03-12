@@ -1,8 +1,9 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import { Navbar, Nav, Form, Button, Modal, Table } from "react-bootstrap";
 import { store } from '../../redux';
+import Badge from 'react-bootstrap/Badge';
 import { USER_DETAILS } from '../../common';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { Navbar, Nav, Form, Button, Modal, Table } from "react-bootstrap";
 
 class Header extends React.Component {
 
@@ -28,14 +29,14 @@ class Header extends React.Component {
           <Nav className="mr-auto">
             <Link className='nav-link' to="/home">Home<Nav.Link ></Nav.Link></Link>
             <Link className='nav-link' to="/about" >About<Nav.Link></Nav.Link></Link>
-            {this.state.userDetails && this.state.userDetails.name && window.localStorage['auth_token'] ? (<>
+            {this.state.userDetails && this.state.userDetails.name ? (<>
               <Link className='nav-link' to="/user-list" >User<Nav.Link></Nav.Link></Link>
             </>) : (<></>)
             }
 
           </Nav>
 
-          {this.state.userDetails && this.state.userDetails.name && window.localStorage['auth_token'] ? (
+          {this.state.userDetails && this.state.userDetails.name ? (
             <>
               <Form className="float-right" style={{ marginRight: 10 }} inline>
                 <Button variant="outline-light" onClick={() => { this.setState({ show: true }) }}>Profile</Button>
@@ -70,17 +71,25 @@ class Header extends React.Component {
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
-
-                  <th> Name</th>
+                  <th>Name</th>
                   <td>{this.state.userDetails.name}</td>
-
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th>Email</th>
                   <td>{this.state.userDetails.email}</td>
+                </tr>
 
+                <tr>
+                  <td>Role</td>
+                  <td>
+                    {this.state.userDetails?.role_id == 1 ? <>
+                      <Badge pill variant="primary" style={{ color: 'green' }} >Admin</Badge>
+                    </> : <>
+                      <Badge pill variant="success" style={{ color: 'blue' }}>Employee </Badge>
+                    </>}
+                  </td>
                 </tr>
 
               </tbody>
